@@ -3,11 +3,12 @@ import Joi from "joi";
 import Form from "./common/Form";
 import Input from "./common/Input";
 import auth from "../services/auth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import HashLoader from "react-spinners/HashLoader";
 
 function Login(props) {
   const navigate = useNavigate();
+  const { state } = useLocation;
   const [loading, setLoading] = useState(false);
   const initialValues = {
     email: "",
@@ -27,7 +28,7 @@ function Login(props) {
       setLoading(true);
       await auth.login(formData);
       setLoading(false);
-      navigate("/");
+      navigate(state?.path || "/");
     } catch (error) {
       setLoading(false);
       const { data } = error.response;

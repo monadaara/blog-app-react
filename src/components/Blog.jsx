@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import parse from "html-react-parser";
 import { Link, useParams } from "react-router-dom";
 import blog from "../services/blog";
+import moment from "moment/moment";
 
 function Blog(props) {
   const params = useParams();
@@ -30,6 +31,8 @@ function Blog(props) {
     getReleted();
   }, []);
 
+  console.log(blog);
+
   return (
     <div className="px-5 py-5  lg:px-40 ">
       {article && article.title && (
@@ -49,6 +52,21 @@ function Blog(props) {
                 {tag}
               </Link>
             ))}
+          </div>
+          <div className=" flex items-center justify-start sm:ml-28 border-b-2 py-2 my-4">
+            <img
+              className=" rounded-full w-12"
+              src={article.user.profile && article.user.profile.url}
+              alt="pict"
+            />
+            <div className=" text-sm font-semibold leading-4">
+              <span className=" mb-0 p-0 block">{article.user.name}</span>
+              <span className=" mb-0 p-0 block">
+                {article.createdAt === article.updatedAt
+                  ? `${moment(article.createdAt).format("MMMM DD YYYY")}`
+                  : `${moment(article.updatedAt).format("MMMM DD YYYY")}`}
+              </span>
+            </div>
           </div>
           <img className=" w-full rounded-2xl" src={article.cover.url} alt="" />
 

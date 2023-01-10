@@ -18,11 +18,21 @@ import NewBlogForm from "./components/NewBlogForm";
 import Tags from "./components/Tags";
 import FilterByTag from "./components/FilterByTag";
 import About from "./components/About";
+import PrivateRoute from "./components/common/PrivateRoute";
 
 function App(props) {
   const [currentUser, setCurrentUser] = useState({});
   const [blogs, setBlogs] = useState([]);
   const [loading, setloading] = useState(false);
+
+  const getCurrentUser = async () => {
+    try {
+      const { data } = await auth.getCurrentUser();
+      setCurrentUser(data.data);
+    } catch (error) {
+      return error;
+    }
+  };
 
   const getAllBlogs = async () => {
     try {
@@ -35,19 +45,9 @@ function App(props) {
     }
   };
 
-  const getCurrentUser = async () => {
-    try {
-      const { data } = await auth.getCurrentUser();
-      setCurrentUser(data.data);
-    } catch (error) {
-      return error;
-    }
-  };
   useEffect(() => {
     getCurrentUser();
     getAllBlogs();
-
-    //
   }, []);
 
   if (loading) return <Spinner loading={loading} />;
@@ -56,8 +56,15 @@ function App(props) {
     <>
       <Routes>
         <Route path="/" element={<NavBar currentUser={currentUser} />}>
-          <Route index element={<Home blogs={blogs} />} />
-          <Route path="user" element={<Profile />}>
+          <Route index element={<Home blogs={blogs} setBlogs={setBlogs} />} />
+          <Route
+            path="user"
+            element={
+              <PrivateRoute>
+                <Profile />
+              </PrivateRoute>
+            }
+          >
             <Route index element={<User currentUser={currentUser} />} />
             <Route path="blogs" element={<Blogs />} />
             <Route
@@ -65,8 +72,22 @@ function App(props) {
               element={<Picture currentUser={currentUser} />}
             />
           </Route>
-          <Route path="blog/:id" element={<Blog />} />
-          <Route path="new-blog" element={<NewBlogForm />} />
+          <Route
+            path="blog/:id"
+            element={
+              <PrivateRoute>
+                <Blog />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="new-blog"
+            element={
+              <PrivateRoute>
+                <NewBlogForm />
+              </PrivateRoute>
+            }
+          />
           <Route path="tags" element={<Tags />} />
           <Route path="tags/:tag" element={<FilterByTag />} />
           <Route path="about" element={<About />} />

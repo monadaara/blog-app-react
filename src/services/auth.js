@@ -32,6 +32,10 @@ export const getCurrentUser = () => {
     return error;
   }
 };
+export const authUser = () => {
+  const jwt = localStorage.getItem(token);
+  return jwtDecode(jwt);
+};
 
 export default {
   getJwt,
@@ -39,4 +43,5 @@ export default {
   getJwt,
   loginWithJwt,
   getCurrentUser,
+  authUser,
 };
