@@ -16,9 +16,6 @@ function Picture({ currentUser }) {
         src={currentUser && currentUser.profile ? currentUser.profile.url : ""}
         alt=""
       />
-      <form action="">
-        <input type="file" name="profile" id="" />
-      </form>
     </div>
   );
 }

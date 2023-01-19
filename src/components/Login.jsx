@@ -28,7 +28,7 @@ function Login(props) {
       setLoading(true);
       await auth.login(formData);
       setLoading(false);
-      navigate(state?.path || "/");
+      window.location = state?.path || "/";
     } catch (error) {
       setLoading(false);
       const { data } = error.response;

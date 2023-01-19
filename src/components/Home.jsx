@@ -1,30 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AllBlogs from "./AllBlogs";
 
-function Home({ blogs, setBlogs }) {
+function Home({ blogs }) {
   const [search, setSeach] = useState("");
+  const [filtered, setFiltered] = useState(blogs);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
+  useEffect(() => {
     if (search) {
-      const result = blogs.filter((blog) =>
+      const result = filtered.filter((blog) =>
         blog.title.toLowerCase().startsWith(search)
       );
-      setBlogs(result);
+
+      setFiltered(result);
     } else {
-      window.location = "/";
+      setFiltered(blogs);
     }
-    setSeach("");
-  };
+  }, [search]);
 
   return (
     <div className="px-5 py-5  lg:px-40">
-      <form
-        onSubmit={handleSubmit}
-        action=""
-        className=" my-10 flex items-center justify-center"
-      >
+      <form action="" className=" my-10 flex items-center justify-center">
         <input
           value={search}
           onChange={(e) => setSeach(e.target.value)}
@@ -33,7 +28,7 @@ function Home({ blogs, setBlogs }) {
          py-3 text-lg px-3 rounded-lg border border-slate-600  "
         />
       </form>
-      <AllBlogs blogs={blogs} />
+      <AllBlogs blogs={filtered} />
     </div>
   );
 }

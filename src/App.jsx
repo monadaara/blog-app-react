@@ -19,6 +19,8 @@ import Tags from "./components/Tags";
 import FilterByTag from "./components/FilterByTag";
 import About from "./components/About";
 import PrivateRoute from "./components/common/PrivateRoute";
+import ScrollToTop from "./components/ScrollToTop";
+import UpdateBlog from "./components/UpdateBlog";
 
 function App(props) {
   const [currentUser, setCurrentUser] = useState({});
@@ -54,6 +56,7 @@ function App(props) {
 
   return (
     <>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<NavBar currentUser={currentUser} />}>
           <Route index element={<Home blogs={blogs} setBlogs={setBlogs} />} />
@@ -85,6 +88,14 @@ function App(props) {
             element={
               <PrivateRoute>
                 <NewBlogForm />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="update-blog/:blogId"
+            element={
+              <PrivateRoute>
+                <UpdateBlog />
               </PrivateRoute>
             }
           />

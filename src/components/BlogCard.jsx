@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 function BlogCard({ blogs }) {
+  if (!blogs.length)
+    return <p className=" mt-5 text-xl font-semibold">No content</p>;
   return (
     blogs &&
     blogs.map((blog) => (

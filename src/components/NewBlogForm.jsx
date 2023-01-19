@@ -45,7 +45,7 @@ function NewBlogForm(props) {
       setLoading(true);
       await blog.createBlog(formData);
       setLoading(false);
-      navigate("/");
+      window.location = "/";
     } catch (error) {
       return error;
     }
@@ -91,15 +91,6 @@ function NewBlogForm(props) {
       className=" flex flex-col items-center"
       value={{ formData, handleChange, formError }}
     >
-      <div className=" absolute bottom-1 left-60 z-10">
-        <HashLoader
-          color={"#0C0A3E"}
-          loading={loading}
-          size={30}
-          aria-label="Loading Spinner"
-          data-testid="loader"
-        />
-      </div>
       <form
         onSubmit={handleSubmit}
         encType="multipart/form-data"
@@ -136,6 +127,16 @@ function NewBlogForm(props) {
           {formError && (
             <span className=" text-red-500 text-xs">{formError.cover}</span>
           )}
+        </div>
+
+        <div className=" absolute bottom-8 left-60 z-10">
+          <HashLoader
+            color={"#0C0A3E"}
+            loading={loading}
+            size={30}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
         </div>
 
         <button

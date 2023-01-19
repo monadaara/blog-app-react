@@ -24,8 +24,17 @@ const getTags = () => {
 const createBlog = (formData) => {
   return http.post(apiEndpoint, formData);
 };
+const updateBlog = (id, formData) => {
+  return http.put(`${apiEndpoint}/${id}`, formData);
+};
+
+const deleteBlog = (id) => {
+  return http.delete(`${apiEndpoint}/${id}`);
+};
 
 export default {
+  deleteBlog,
+  updateBlog,
   getAllPost,
   getReletedBlogs,
   getBlog,

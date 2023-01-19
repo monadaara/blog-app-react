@@ -13,8 +13,8 @@ function Footer(props) {
       </div>
       <div className=" flex gap-5 sm:flex-col pl-5 text-white text-2xl ">
         <Link to={"/"}>Home</Link>
-        <Link to={"/"}>Tags</Link>
-        <Link to={"/"}>Contact</Link>
+        <Link to={"tags"}>Tags</Link>
+        <Link to={"about"}>About</Link>
       </div>
       <div className=" text-2xl pl-5 flex gap-5 sm:flex-none">
         <BsGithub

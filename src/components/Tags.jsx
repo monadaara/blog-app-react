@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import blog from "../services/blog";
+import Spinner from "./common/Spinner";
 
 function Tags(props) {
   const [tag, setTag] = useState([]);
+  const [loading, setloading] = useState(false);
 
   const getData = async () => {
     try {
+      setloading(true);
       const { data } = await blog.getTags();
 
       const arr = [];
@@ -19,12 +22,15 @@ function Tags(props) {
       }, []);
 
       setTag(tags);
+      setloading(false);
     } catch (error) {}
   };
 
   useEffect(() => {
     getData();
   }, []);
+
+  if (loading) <Spinner loading={loading} />;
 
   return (
     <div className="px-5 py-5  lg:px-40">

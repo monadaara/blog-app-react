@@ -3,6 +3,7 @@ import axios from "axios";
 axios.defaults.baseURL = "http://localhost:4000/api/";
 
 const setjwt = (jwt) => {
+  console.log("hello");
   axios.defaults.headers.common["x-auth-token"] = jwt;
 };
 

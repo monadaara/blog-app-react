@@ -33,7 +33,7 @@ function Signup(props) {
       const response = await register(formData);
       auth.loginWithJwt(response.headers["x-auth-token"]);
       setLoading(false);
-      navigate("/");
+      window.location = "/";
     } catch (error) {
       return error;
     }
@@ -41,13 +41,6 @@ function Signup(props) {
 
   return (
     <div className=" flex justify-center flex-col items-center min-h-screen bg-yellow-50">
-      <HashLoader
-        color={"#64F58D"}
-        loading={loading}
-        size={30}
-        aria-label="Loading Spinner"
-        data-testid="loader"
-      />
       <Form
         btnLabel="Register"
         initialValues={initialValues}
