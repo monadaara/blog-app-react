@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Route, Routes } from "react-router-dom";
+import { useQuery } from "react-query";
 import Home from "./components/Home";
 import NavBar from "./components/NavBar";
 import Signup from "./components/Signup";
@@ -23,43 +24,16 @@ import ScrollToTop from "./components/ScrollToTop";
 import UpdateBlog from "./components/UpdateBlog";
 
 function App(props) {
-  const [currentUser, setCurrentUser] = useState({});
-  const [blogs, setBlogs] = useState([]);
-  const [loading, setloading] = useState(false);
+  const user = useQuery("user", auth.getCurrentUser);
+  const blogs = useQuery("allBlogs", blog.getAllPost);
 
-  const getCurrentUser = async () => {
-    try {
-      const { data } = await auth.getCurrentUser();
-      setCurrentUser(data.data);
-    } catch (error) {
-      return error;
-    }
-  };
-
-  const getAllBlogs = async () => {
-    try {
-      setloading(true);
-      const { data } = await blog.getAllPost();
-      setBlogs(data.data);
-      setloading(false);
-    } catch (error) {
-      return error;
-    }
-  };
-
-  useEffect(() => {
-    getCurrentUser();
-    getAllBlogs();
-  }, []);
-
-  if (loading) return <Spinner loading={loading} />;
-
+  if (blogs.isLoading) return <Spinner loading={true} />;
   return (
     <>
       <ScrollToTop />
       <Routes>
-        <Route path="/" element={<NavBar currentUser={currentUser} />}>
-          <Route index element={<Home blogs={blogs} setBlogs={setBlogs} />} />
+        <Route path="/" element={<NavBar currentUser={user} />}>
+          <Route index element={<Home blogs={blogs} />} />
           <Route
             path="user"
             element={
@@ -68,12 +42,9 @@ function App(props) {
               </PrivateRoute>
             }
           >
-            <Route index element={<User currentUser={currentUser} />} />
+            <Route index element={<User currentUser={user} />} />
             <Route path="blogs" element={<Blogs />} />
-            <Route
-              path="profile"
-              element={<Picture currentUser={currentUser} />}
-            />
+            <Route path="profile" element={<Picture currentUser={user} />} />
           </Route>
           <Route
             path="blog/:id"

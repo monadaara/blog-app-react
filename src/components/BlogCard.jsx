@@ -1,12 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Spinner from "./common/Spinner";
 
 function BlogCard({ blogs }) {
-  if (!blogs.length)
+  if (!blogs.isSuccess)
     return <p className=" mt-5 text-xl font-semibold">No content</p>;
   return (
-    blogs &&
-    blogs.map((blog) => (
+    blogs.isSuccess &&
+    blogs.data.map((blog) => (
       <div className=" w-1/1" key={blog._id}>
         <Link
           to={`/blog/${blog._id}`}

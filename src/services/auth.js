@@ -25,9 +25,10 @@ export function getJwt() {
   return localStorage.getItem(token);
 }
 
-export const getCurrentUser = () => {
+export const getCurrentUser = async () => {
   try {
-    return http.get(`users/me`);
+    const { data } = await http.get(`users/me`);
+    return data.data;
   } catch (error) {
     return error;
   }

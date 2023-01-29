@@ -40,7 +40,7 @@ function NavBar({ currentUser }) {
             About
           </NavLink>
         </div>
-        {currentUser && Object.keys(currentUser) == 0 ? (
+        {currentUser.isSuccess && Object.keys(currentUser.data) == 0 ? (
           <div className="flex justify-between items-center gap-4 sm:gap-10 sm:text-lg">
             <button className=" text-spring">
               <Link to={"/register"}>Signup</Link>
@@ -54,7 +54,7 @@ function NavBar({ currentUser }) {
             <Link to={"user"}>
               <img
                 className=" w-10 rounded-full"
-                src={currentUser && currentUser.profile.url}
+                src={currentUser && currentUser.data.profile.url}
                 alt=""
               />
             </Link>

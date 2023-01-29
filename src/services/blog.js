@@ -2,15 +2,20 @@ import http from "./http";
 
 const apiEndpoint = "posts";
 
-const getAllPost = () => {
-  return http.get(apiEndpoint);
+const getAllPost = async () => {
+  const { data } = await http.get(apiEndpoint);
+  console.log("data", data.data);
+  return data.data;
 };
 
-const getBlog = (id) => {
-  return http.get(`${apiEndpoint}/${id}`);
+const getBlog = async (id) => {
+  const { data } = await http.get(`${apiEndpoint}/${id}`);
+  return data.data;
 };
-const getMyBlogs = () => {
-  return http.get(`${apiEndpoint}/me`);
+const getMyBlogs = async () => {
+  const { data } = await http.get(`${apiEndpoint}/me`);
+
+  return data.data;
 };
 
 const getReletedBlogs = (tag) => {
